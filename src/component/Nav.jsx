@@ -1,0 +1,55 @@
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarCollapse,
+  NavbarLink,
+  NavbarToggle,
+} from "flowbite-react";
+
+import { Link } from "react-router";
+
+const Nav = () => {
+  return (
+    <Navbar className=" shadow-lg shadow-black-500/25 p-4 " fluid>
+      <NavbarBrand href="https://flowbite-react.com">
+        <img
+          className="w-8 h-8 mr-2"
+          src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+          alt="logo"
+        />
+        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+          Movieverse
+        </span>
+      </NavbarBrand>
+      <NavbarToggle />
+      <NavbarCollapse>
+        <Link
+          to="/"
+          className="hover:text-red-400 transition-colors duration-200 font-medium"
+        >
+          Home
+        </Link>
+        <Link
+          to="/tv"
+          className="hover:text-red-400 transition-colors duration-200 font-medium"
+        >
+          TV Shows
+        </Link>
+        <Link
+          to="/search"
+          className="hover:text-red-400 transition-colors duration-200 font-medium"
+        >
+          Search
+        </Link>
+        <Link
+          to="/login"
+          className="hover:text-red-400 transition-colors duration-200 font-medium"
+        >
+          Login
+        </Link>
+      </NavbarCollapse>
+    </Navbar>
+  );
+};
+
+export default Nav;
