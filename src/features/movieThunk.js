@@ -37,7 +37,6 @@ export const fetchUpcomingMovies = createAsyncThunk(
   }
 );
 
-// 🎥 Single Movie Detail
 export const fetchMovieDetail = createAsyncThunk(
   "movies/fetchDetail",
   async (id) => {
