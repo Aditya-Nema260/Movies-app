@@ -6,6 +6,7 @@ import MovieDetail from "./pages/MovieDetail";
 import SearchBar from "./pages/SearchBar";
 import TVShow from "./pages/TvShow";
 import Favorites from "./pages/Favorites";
+import ProtectedRoute from "./component/ProtectedRoute";
 
 const App = () => {
   return (
@@ -15,10 +16,13 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/movie/:id" element={<MovieDetail />} />
-          <Route path="/search" element={<SearchBar />} />
-          <Route path="/tv" element={<TVShow />} />
-          <Route path="/favorites" element={<Favorites />} />
+
+          {/* <Route element={<ProtectedRoute />}> */}
+            <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/search" element={<SearchBar />} />
+            <Route path="/tv" element={<TVShow />} />
+            <Route path="/favorites" element={<Favorites />} />
+          {/* </Route> */}
         </Routes>
       </BrowserRouter>
     </>

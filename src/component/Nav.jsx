@@ -11,7 +11,7 @@ import { Link } from "react-router";
 const Nav = () => {
   return (
     <Navbar className=" shadow-lg shadow-black-500/25 p-4 " fluid>
-      <NavbarBrand href="https://flowbite-react.com">
+      <NavbarBrand>
         <img
           className="w-8 h-8 mr-2"
           src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"

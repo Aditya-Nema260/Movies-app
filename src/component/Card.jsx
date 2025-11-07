@@ -11,22 +11,19 @@ const Card = ({ object }) => {
     overview,
   } = object;
 
-  if (!poster_path) return null; // skip cards with no image
+  if (!poster_path) return null;
 
   return (
     <Link to={`/movie/${id}`}>
       <div className="relative w-44 sm:w-52 md:w-56 lg:w-60 xl:w-64 transition-transform duration-300 hover:scale-105 cursor-pointer group">
-        {/* Movie Poster */}
         <img
-          className="w-full h-72 sm:h-80 md:h-96 object-cover rounded-lg shadow-md"
+          className="w-full h-60 sm:h-80 md:h-96 object-cover rounded-lg shadow-md"
           src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
           alt={title || name}
         />
 
-        {/* Dark overlay */}
         <div className="absolute inset-0 rounded-lg bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
 
-        {/* Hover Info */}
         <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity duration-300 flex flex-col justify-end p-3 text-white">
           <h3 className="text-sm sm:text-base font-semibold truncate mb-1">
             {title || name}

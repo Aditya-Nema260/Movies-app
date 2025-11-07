@@ -3,6 +3,7 @@ import movieReducer from "../features/movieSlice";
 import searchReducer from "../features/searchSlice";
 import tvReducer from "../features/tvSlice";
 import favoriteReducer from "../features/favoritesSlice";
+import authReducer from "../features/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     search: searchReducer,
     tv: tvReducer,
     favorite: favoriteReducer,
+    authentication : authReducer
   },
 });

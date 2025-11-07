@@ -24,16 +24,16 @@ const TVShow = () => {
   if (error) return <p>Error loading TV shows</p>;
 
   return (
-    <>
+    <dic className = "p-6 space-y-10">
       <h2 className="text-2xl font-bold mb-4 text-center text-blue-500">
-        🎬 TV SHOWS
+        TV SHOWS
       </h2>
-      <div className="flex gap-4 justify-around flex-wrap">
+      <div className=" ml-9 flex gap-4 justify-baseline flex-wrap">
         {items.results?.map((obj) => (
           <Card key={obj.id} object={obj} />
         ))}
       </div>
-    </>
+    </dic>
   );
 };
 
