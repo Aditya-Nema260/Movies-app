@@ -8,10 +8,10 @@ import {
 } from "./movieThunk";
 
 export const movieSlice = createSlice({
-  name: "movieFet",
+  name: "movie",
   initialState: {
     items: [],
-    ending: [],
+    trending: [],
     popular: [],
     upcoming: [],
     detail: null,

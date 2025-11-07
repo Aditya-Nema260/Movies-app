@@ -9,23 +9,39 @@ export const fetchMovies = createAsyncThunk("movies/fetchMovies", async () => {
   return res.data;
 });
 
-export const fetchTrendingMovies = createAsyncThunk("movies/fetchTrending", async () => {
-  const res = await axios.get(`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`);
-  return res.data;
-});
+export const fetchTrendingMovies = createAsyncThunk(
+  "movies/fetchTrending",
+  async () => {
+    const res = await axios.get(
+      `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
+    );
+    return res.data;
+  }
+);
 
-export const fetchPopularMovies = createAsyncThunk("movies/fetchPopular", async () => {
-  const res = await axios.get(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
-  return res.data;
-});
+export const fetchPopularMovies = createAsyncThunk(
+  "movies/fetchPopular",
+  async () => {
+    const res = await axios.get(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
+    return res.data;
+  }
+);
 
-export const fetchUpcomingMovies = createAsyncThunk("movies/fetchUpcoming", async () => {
-  const res = await axios.get(`${BASE_URL}/movie/upcoming?api_key=${API_KEY}`);
-  return res.data;
-});
+export const fetchUpcomingMovies = createAsyncThunk(
+  "movies/fetchUpcoming",
+  async () => {
+    const res = await axios.get(
+      `${BASE_URL}/movie/upcoming?api_key=${API_KEY}`
+    );
+    return res.data;
+  }
+);
 
 // 🎥 Single Movie Detail
-export const fetchMovieDetail = createAsyncThunk("movies/fetchDetail", async (id) => {
-  const res = await axios.get(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
-  return res.data;
-});
+export const fetchMovieDetail = createAsyncThunk(
+  "movies/fetchDetail",
+  async (id) => {
+    const res = await axios.get(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+    return res.data;
+  }
+);

@@ -17,3 +17,9 @@ If you are developing a production application, we recommend using TypeScript wi
 
 
 https://api.themoviedb.org/3/discover/movie?api_key=3449a74ae43b0baa635eaff5dbe9f93b
+
+
+
+        <Link to={"/"}>Home</Link>
+        <Link to="/login">Login</Link>
+

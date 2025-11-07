@@ -36,6 +36,12 @@ const Nav = () => {
           TV Shows
         </Link>
         <Link
+          to="/favorites"
+          className="hover:text-red-400 transition-colors duration-200 font-medium"
+        >
+          Favorites
+        </Link>
+        <Link
           to="/search"
           className="hover:text-red-400 transition-colors duration-200 font-medium"
         >

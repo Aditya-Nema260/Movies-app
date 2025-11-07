@@ -1,4 +1,3 @@
-// import React, { useEffect, useLayoutEffect, useState } from "react";
 import Login from "./component/Login";
 import Nav from "./component/Nav";
 import Home from "./pages/Home";
@@ -6,10 +5,9 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import MovieDetail from "./pages/MovieDetail";
 import SearchBar from "./pages/SearchBar";
 import TVShow from "./pages/TvShow";
+import Favorites from "./pages/Favorites";
 
 const App = () => {
-
-
   return (
     <>
       <BrowserRouter>
@@ -20,6 +18,7 @@ const App = () => {
           <Route path="/movie/:id" element={<MovieDetail />} />
           <Route path="/search" element={<SearchBar />} />
           <Route path="/tv" element={<TVShow />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </BrowserRouter>
     </>
