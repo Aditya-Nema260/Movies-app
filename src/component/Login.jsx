@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../features/authSlice";
+import { loginUser, signUpUser } from "../features/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [user, setUser] = useState({ email: "", password: "", name: "" });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleChange(e) {
     setUser((prev) => ({
@@ -17,10 +18,13 @@ const Login = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(loginUser(user))
-    
+    if (isSignUp) {
+      dispatch(signUpUser(user));
+    } else {
+      dispatch(loginUser(user));
+    }
+    navigate("/");
   }
-  const dispatch = useDispatch()
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -39,9 +43,31 @@ const Login = () => {
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Sign in to your account
+              {isSignUp ? "Create a new account" : "Sign in to your account"}
             </h1>
+
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+              {isSignUp && (
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={user.name}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+              )}
+
               <div>
                 <label
                   htmlFor="email"
@@ -55,11 +81,12 @@ const Login = () => {
                   id="email"
                   value={user.email}
                   onChange={handleChange}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
                   placeholder="name@company.com"
-                  required=""
+                  required
                 />
               </div>
+
               <div>
                 <label
                   htmlFor="password"
@@ -73,52 +100,41 @@ const Login = () => {
                   id="password"
                   value={user.password}
                   onChange={handleChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required=""
+                  required
                 />
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      aria-describedby="remember"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required=""
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
+
               <button
                 type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
-                Sign in
+                {isSignUp ? "Sign Up" : "Sign In"}
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Sign up
-                </a>
+
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
+                {isSignUp ? (
+                  <>
+                    Already have an account?{" "}
+                    <span
+                      onClick={() => setIsSignUp(false)}
+                      className="font-medium text-blue-600 hover:underline cursor-pointer"
+                    >
+                      Sign in
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    Don’t have an account yet?{" "}
+                    <span
+                      onClick={() => setIsSignUp(true)}
+                      className="font-medium text-blue-600 hover:underline cursor-pointer"
+                    >
+                      Sign up
+                    </span>
+                  </>
+                )}
               </p>
             </form>
           </div>

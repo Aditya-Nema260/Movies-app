@@ -1,43 +1,64 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const storedUser = JSON.parse(localStorage.getItem("user"));
+const initialAuth = storedUser
+  ? { isAuth: true, currentUser: storedUser }
+  : { isAuth: false, currentUser: null };
+
 const authSlice = createSlice({
-  name: "Authentication",
+  name: "authentication",
   initialState: {
-    isAuth:false,
-    userData: [{ email: "aditya@1234.com", password: "ppp123" }],
+    ...initialAuth,
+    userData: [
+      { email: "aditya@1234.com", password: "ppp123", name: "Aditya" },
+    ],
   },
   reducers: {
     loginUser: (state, action) => {
       const user = state.userData.find(
-        (user) =>
-          user.email === action.payload.email &&
-          user.password === action.payload.password
+        (u) =>
+          u.email === action.payload.email &&
+          u.password === action.payload.password
       );
+
       if (user) {
-        state.isAuth = true
-        console.log("Success:", { ...user, isLoggedIn: true });
-        console.log(state.userData);
-        
+        state.isAuth = true;
+        state.currentUser = user;
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log("Login success:", user);
       } else {
-        console.log("un success");
-      
+        alert("Invalid email or password");
       }
     },
-    logOutUser: (state, action) => {
-        
-        const user = state.userData.find(
-            (user) =>
-                user.email === action.payload.email &&
-            user.password === action.payload.password
-        );
-        if (!user) {
-          state.isAuth = false
-        console.log("Success:", { ...user, isLoggedIn: false });
-        console.log(state.userData);
-      } else console.log("un success");
+
+    signUpUser: (state, action) => {
+      const existingUser = state.userData.find(
+        (u) => u.email === action.payload.email
+      );
+      if (existingUser) {
+        alert("User already exists!");
+        return;
+      }
+      const newUser = {
+        email: action.payload.email,
+        password: action.payload.password,
+        name: action.payload.name,
+      };
+      state.userData.push(newUser);
+      state.isAuth = true;
+      state.currentUser = newUser;
+      localStorage.setItem("user", JSON.stringify(newUser));
+      console.log("Signup success:", newUser);
+    },
+
+    logOutUser: (state) => {
+      state.isAuth = false;
+      state.currentUser = null;
+      localStorage.removeItem("user");
+      console.log("Logged out");
     },
   },
 });
 
-export const { loginUser } = authSlice.actions;
+export const { loginUser, signUpUser, logOutUser } = authSlice.actions;
 export default authSlice.reducer;
