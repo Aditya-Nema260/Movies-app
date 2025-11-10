@@ -1,9 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-console.log("hello from favorite");
+function getUserEmail() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  return user?.email || "guest";
+}
+
+function getStoredFavorites() {
+  const email = getUserEmail();
+  return JSON.parse(localStorage.getItem(`favorites_${email}`)) || [];
+}
 
 const initialState = {
-  favorites: JSON.parse(localStorage.getItem("favorites")) || [],
+  favorites: getStoredFavorites(),
 };
 
 const favoriteSlice = createSlice({
@@ -11,25 +19,34 @@ const favoriteSlice = createSlice({
   initialState,
   reducers: {
     addToFavourite: (state, action) => {
-      const content = state.favorites.find((m) => m.id == action.payload.id);
+      const email = getUserEmail();
+      const key = `favorites_${email}`;
+      const content = state.favorites.find((m) => m.id === action.payload.id);
       if (!content) {
         state.favorites.push(action.payload);
-        console.log(state);
-
-        localStorage.setItem("favorites", JSON.stringify(state.favorites));
+        localStorage.setItem(key, JSON.stringify(state.favorites));
       }
     },
-    removeFromFavourite: (state, action) => {
-      console.log("hello from remove", action.payload.id);
 
+    removeFromFavourite: (state, action) => {
+      const email = getUserEmail();
+      const key = `favorites_${email}`;
       state.favorites = state.favorites.filter(
         (content) => content.id !== action.payload.id
       );
-      localStorage.setItem("favorites", JSON.stringify(state.favorites));
+      localStorage.setItem(key, JSON.stringify(state.favorites));
+    },
+
+    loadUserFavorites: (state) => {
+      // For reload after login
+      state.favorites = getStoredFavorites();
     },
   },
 });
 
-export const { addToFavourite, removeFromFavourite } = favoriteSlice.actions;
+export const {
+  addToFavourite,
+  removeFromFavourite,
+  loadUserFavorites,
+} = favoriteSlice.actions;
 export default favoriteSlice.reducer;
-

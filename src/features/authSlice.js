@@ -12,6 +12,7 @@ const authSlice = createSlice({
     userData: [
       { email: "aditya@1234.com", password: "ppp123", name: "Aditya" },
     ],
+    error: null,
   },
   reducers: {
     loginUser: (state, action) => {
@@ -24,10 +25,11 @@ const authSlice = createSlice({
       if (user) {
         state.isAuth = true;
         state.currentUser = user;
+        state.error = null; // ✅ clear error if successful
         localStorage.setItem("user", JSON.stringify(user));
         console.log("Login success:", user);
       } else {
-        alert("Invalid email or password");
+        state.error = "Invalid email or password"; // ✅ Set error here
       }
     },
 
@@ -36,9 +38,10 @@ const authSlice = createSlice({
         (u) => u.email === action.payload.email
       );
       if (existingUser) {
-        alert("User already exists!");
+        state.error = "User already exists!"; 
         return;
       }
+
       const newUser = {
         email: action.payload.email,
         password: action.payload.password,
@@ -47,6 +50,7 @@ const authSlice = createSlice({
       state.userData.push(newUser);
       state.isAuth = true;
       state.currentUser = newUser;
+      state.error = null;
       localStorage.setItem("user", JSON.stringify(newUser));
       console.log("Signup success:", newUser);
     },
@@ -54,6 +58,7 @@ const authSlice = createSlice({
     logOutUser: (state) => {
       state.isAuth = false;
       state.currentUser = null;
+      state.error = null;
       localStorage.removeItem("user");
       console.log("Logged out");
     },

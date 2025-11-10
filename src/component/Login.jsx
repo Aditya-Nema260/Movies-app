@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser, signUpUser } from "../features/authSlice";
+import { loadUserFavorites } from "../features/favoritesSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -17,13 +18,19 @@ const Login = () => {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); 
+
     if (isSignUp) {
       dispatch(signUpUser(user));
     } else {
       dispatch(loginUser(user));
     }
-    navigate("/");
+
+    
+    setTimeout(() => {
+      dispatch(loadUserFavorites());
+      navigate("/");
+    }, 300);
   }
 
   return (
@@ -40,25 +47,21 @@ const Login = () => {
           />
           Movieverse
         </a>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-xl font-bold text-gray-900 md:text-2xl dark:text-white">
               {isSignUp ? "Create a new account" : "Sign in to your account"}
             </h1>
 
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               {isSignUp && (
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Your Name
                   </label>
                   <input
                     type="text"
                     name="name"
-                    id="name"
                     value={user.name}
                     onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
@@ -69,16 +72,12 @@ const Login = () => {
               )}
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Your email
                 </label>
                 <input
                   type="email"
                   name="email"
-                  id="email"
                   value={user.email}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
@@ -88,16 +87,12 @@ const Login = () => {
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Password
                 </label>
                 <input
                   type="password"
                   name="password"
-                  id="password"
                   value={user.password}
                   onChange={handleChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
