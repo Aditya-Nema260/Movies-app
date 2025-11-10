@@ -9,9 +9,7 @@ const authSlice = createSlice({
   name: "authentication",
   initialState: {
     ...initialAuth,
-    userData: [
-      { email: "aditya@1234.com", password: "ppp123", name: "Aditya" },
-    ],
+    userData: [],
     error: null,
   },
   reducers: {
@@ -25,11 +23,11 @@ const authSlice = createSlice({
       if (user) {
         state.isAuth = true;
         state.currentUser = user;
-        state.error = null; // ✅ clear error if successful
+        state.error = null; 
         localStorage.setItem("user", JSON.stringify(user));
         console.log("Login success:", user);
       } else {
-        state.error = "Invalid email or password"; // ✅ Set error here
+        state.error = "Invalid email or password"; 
       }
     },
 
