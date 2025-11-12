@@ -15,21 +15,23 @@ const TVShow = () => {
 
   if (loading)
     return (
-      <Atom
-        color="#32cd32"
-        size="large"
-        text="Finding best tv shows for you"
-        textColor=""
-      />
+      <div className=" h-screen flex justify-center items-center">
+        <Atom
+          color="#32cd32"
+          size="large"
+          text="Finding best tv shows for you"
+          textColor=""
+        />
+      </div>
     );
   if (error) {
-console.log(error);
+    console.log(error);
 
     return <p>Error loading TV shows</p>;
   }
 
   return (
-    <div className = "p-6 space-y-10">
+    <div className="p-6 space-y-10">
       <h2 className="text-2xl font-bold mb-4 text-center text-blue-500">
         TV SHOWS
       </h2>

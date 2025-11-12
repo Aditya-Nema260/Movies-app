@@ -3,6 +3,7 @@ import Card from "../component/Card";
 // import { Button } from "flowbite-react";
 import { useDispatch } from "react-redux";
 import { removeFromFavourite } from "../features/favoritesSlice";
+import { ToastContainer } from "react-toastify";
 const Favorites = () => {
   const { favorites } = useSelector((state) => state.favorite);
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const Favorites = () => {
           <p>No favorite list fond</p>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

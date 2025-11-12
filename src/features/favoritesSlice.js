@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 function getUserEmail() {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
-  
+  console.log("User", user);
+
   return user?.email || "guest";
 }
 
@@ -27,14 +28,23 @@ const favoriteSlice = createSlice({
       if (!content) {
         state.favorites.push(action.payload);
         localStorage.setItem(key, JSON.stringify(state.favorites));
+        console.log("added to favorite");
+        console.log("Data", [...state.favorites]);
+
+        toast("Added to your favourite list");
+      } else {
+        toast("Already in your favourite list");
       }
-      console.log([...state.favorites].length);
-      
+      console.log("added to favorite");
     },
 
     removeFromFavourite: (state, action) => {
+      
       const email = getUserEmail();
       const key = `favorites_${email}`;
+      toast("Removed favourite list");
+      console.log("hello from remove");
+
       state.favorites = state.favorites.filter(
         (content) => content.id !== action.payload.id
       );
@@ -47,9 +57,6 @@ const favoriteSlice = createSlice({
   },
 });
 
-export const {
-  addToFavourite,
-  removeFromFavourite,
-  loadUserFavorites,
-} = favoriteSlice.actions;
+export const { addToFavourite, removeFromFavourite, loadUserFavorites } =
+  favoriteSlice.actions;
 export default favoriteSlice.reducer;
