@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser, signUpUser } from "../features/authSlice";
 import { loadUserFavorites } from "../features/favoritesSlice";
@@ -11,7 +11,16 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isAuth } = useSelector((state) => state.authentication);
+  const { isAuth, error, currentUser } = useSelector(
+    (state) => state.authentication
+  );
+
+  useEffect(() => {
+    if (isAuth && currentUser) {
+      dispatch(loadUserFavorites());
+      navigate("/");
+    }
+  }, [currentUser]);
 
   function handleChange(e) {
     setUser((prev) => ({
@@ -22,26 +31,25 @@ const Login = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     if (isSignUp) {
       dispatch(signUpUser(user));
     } else {
       dispatch(loginUser(user));
     }
-
-    setTimeout(() => {
-      console.log(isAuth);
-      
-      if (isAuth) {
-        dispatch(loadUserFavorites());
-        navigate("/");
-      }
-    }, 500);
   }
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        {error && (
+          <div
+            className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert"
+          >
+            <span className="font-medium">Error!</span> {error}
+          </div>
+        )}
+
         <a
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"

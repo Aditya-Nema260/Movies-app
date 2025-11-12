@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 function getUserEmail() {
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
+  
   return user?.email || "guest";
 }
 
