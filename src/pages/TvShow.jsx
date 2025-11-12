@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTVShows } from "../features/tvThunk";
 import Card from "../component/Card";
 import { Atom } from "react-loading-indicators";
+import TvCard from "../component/TvCard";
 
 const TVShow = () => {
   const dispatch = useDispatch();
@@ -21,19 +22,23 @@ const TVShow = () => {
         textColor=""
       />
     );
-  if (error) return <p>Error loading TV shows</p>;
+  if (error) {
+console.log(error);
+
+    return <p>Error loading TV shows</p>;
+  }
 
   return (
-    <dic className = "p-6 space-y-10">
+    <div className = "p-6 space-y-10">
       <h2 className="text-2xl font-bold mb-4 text-center text-blue-500">
         TV SHOWS
       </h2>
-      <div className=" ml-9 flex gap-4 justify-baseline flex-wrap">
+      <div className=" ml-9 flex gap-3 justify-baseline flex-wrap">
         {items.results?.map((obj) => (
-          <Card key={obj.id} object={obj} />
+          <TvCard key={obj.id} object={obj} />
         ))}
       </div>
-    </dic>
+    </div>
   );
 };
 

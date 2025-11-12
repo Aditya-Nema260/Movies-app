@@ -26,6 +26,8 @@ const favoriteSlice = createSlice({
         state.favorites.push(action.payload);
         localStorage.setItem(key, JSON.stringify(state.favorites));
       }
+      console.log([...state.favorites].length);
+      
     },
 
     removeFromFavourite: (state, action) => {
@@ -38,7 +40,6 @@ const favoriteSlice = createSlice({
     },
 
     loadUserFavorites: (state) => {
-      // For reload after login
       state.favorites = getStoredFavorites();
     },
   },

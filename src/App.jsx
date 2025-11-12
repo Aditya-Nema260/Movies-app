@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import MovieDetail from "./pages/MovieDetail";
 import SearchBar from "./pages/SearchBar";
 import TVShow from "./pages/TvShow";
+import TvDetail from "./pages/TvDetail";
 import Favorites from "./pages/Favorites";
 import ProtectedRoute from "./component/ProtectedRoute";
 
@@ -19,6 +20,7 @@ const App = () => {
 
           <Route element={<ProtectedRoute />}>
             <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/tv/:id" element={<TvDetail />} />
             <Route path="/search" element={<SearchBar />} />
             <Route path="/tv" element={<TVShow />} />
             <Route path="/favorites" element={<Favorites />} />

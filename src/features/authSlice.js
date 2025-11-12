@@ -5,15 +5,19 @@ const initialAuth = storedUser
   ? { isAuth: true, currentUser: storedUser }
   : { isAuth: false, currentUser: null };
 
+const initialUserData = JSON.parse(localStorage.getItem("userData")) || [];
+
 const authSlice = createSlice({
   name: "authentication",
   initialState: {
     ...initialAuth,
-    userData: [],
+    userData: initialUserData,
     error: null,
   },
   reducers: {
     loginUser: (state, action) => {
+      console.log("AllUsers : ", state.userData);
+
       const user = state.userData.find(
         (u) =>
           u.email === action.payload.email &&
@@ -23,11 +27,11 @@ const authSlice = createSlice({
       if (user) {
         state.isAuth = true;
         state.currentUser = user;
-        state.error = null; 
+        state.error = null;
         localStorage.setItem("user", JSON.stringify(user));
         console.log("Login success:", user);
       } else {
-        state.error = "Invalid email or password"; 
+        state.error = "Invalid email or password";
       }
     },
 
@@ -36,7 +40,7 @@ const authSlice = createSlice({
         (u) => u.email === action.payload.email
       );
       if (existingUser) {
-        state.error = "User already exists!"; 
+        state.error = "User already exists!";
         return;
       }
 
@@ -46,6 +50,8 @@ const authSlice = createSlice({
         name: action.payload.name,
       };
       state.userData.push(newUser);
+      
+      localStorage.setItem("userData", JSON.stringify(state.userData));
       state.isAuth = true;
       state.currentUser = newUser;
       state.error = null;
@@ -57,7 +63,7 @@ const authSlice = createSlice({
       state.isAuth = false;
       state.currentUser = null;
       state.error = null;
-      localStorage.removeItem("user");
+      localStorage.removeItem("user");  
       console.log("Logged out");
     },
   },

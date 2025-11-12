@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTVShows } from "./tvThunk";
+import { fetchTVShows,fetchTvDetail } from "./tvThunk";
 
 const tvSlice = createSlice({
   name: "tv",
@@ -20,6 +20,9 @@ const tvSlice = createSlice({
       .addCase(fetchTVShows.rejected, (state) => {
         state.loading = false;
         state.error = "Failed to fetch TV shows";
+      })
+      .addCase(fetchTvDetail.fulfilled, (state, action) => {
+        state.detail = action.payload;
       });
   },
 });

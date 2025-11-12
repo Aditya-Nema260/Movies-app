@@ -3,12 +3,15 @@ import { useDispatch } from "react-redux";
 import { loginUser, signUpUser } from "../features/authSlice";
 import { loadUserFavorites } from "../features/favoritesSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [user, setUser] = useState({ email: "", password: "", name: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { isAuth } = useSelector((state) => state.authentication);
 
   function handleChange(e) {
     setUser((prev) => ({
@@ -18,7 +21,7 @@ const Login = () => {
   }
 
   function handleSubmit(e) {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (isSignUp) {
       dispatch(signUpUser(user));
@@ -26,11 +29,14 @@ const Login = () => {
       dispatch(loginUser(user));
     }
 
-    
     setTimeout(() => {
-      dispatch(loadUserFavorites());
-      navigate("/");
-    }, 300);
+      console.log(isAuth);
+      
+      if (isAuth) {
+        dispatch(loadUserFavorites());
+        navigate("/");
+      }
+    }, 500);
   }
 
   return (

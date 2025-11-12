@@ -10,6 +10,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { logOutUser } from "../features/authSlice";
 
 const Nav = () => {
+  const {favorites} = useSelector((state) => state.favorite)
+  console.log("Nav : ",favorites);
+  
   const { isAuth, currentUser } = useSelector((state) => state.authentication);
   const dispatch = useDispatch();
 
@@ -35,7 +38,7 @@ const Nav = () => {
           TV Shows
         </Link>
         <Link to="/favorites" className="hover:text-red-400 font-medium">
-          Favorites
+          Favorites {isAuth ? `(${favorites.length})` : ""}
         </Link>
         <Link to="/search" className="hover:text-red-400 font-medium">
           Search
@@ -43,12 +46,12 @@ const Nav = () => {
 
         {isAuth ? (
           <div className="flex items-center gap-4">
-            <span className="font-semibold text-blue-600">
+            <span className="font-semibold text-blue-600 mb-2">
               Hello, {currentUser?.name || "User"}
             </span>
             <button
               onClick={() => dispatch(logOutUser())}
-              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+              className="bg-red-500 cursor-pointer hover:bg-red-600 text-white px-3 py-1 mb rounded"
             >
               Logout
             </button>
