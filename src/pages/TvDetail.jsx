@@ -17,9 +17,8 @@ const TvDetail = () => {
 
   if (loading || !detail) return <p>Loading...</p>;
 
+  console.log("TV  ----> ", detail);
 
-  console.log("TV  ----> ",detail);
-  
   const homePage = detail.homepage;
   console.log("HP", homePage);
   const title = detail.name || detail.original_name;
@@ -46,7 +45,8 @@ const TvDetail = () => {
           <div className="grow">
             <h1 className="text-5xl font-extrabold mb-4">{title}</h1>
             <p className="text-xl text-gray-300 mb-6 font-medium">
-              ⭐ {detail.vote_average.toFixed(1)} | Release Date -> {releaseDate} | ⏱{"Runtime - "}
+              ⭐ {detail.vote_average.toFixed(1)} | Release Date ->{" "}
+              {releaseDate} | ⏱{"Runtime - "}
               {runtime}m (Avg. Episode)
             </p>
 
@@ -115,12 +115,12 @@ const TvDetail = () => {
             <Link to={homePage}>
               <button
                 className="cursor-pointer  bg-teal-500 m-2 text-black font-extrabold py-3 px-8 rounded-full transition-transform duration-300 hover:bg-blue-400 hover:scale-105 shadow-xl"
-                onClick={() => dispatch(addToFavourite(detail))}
+                // onClick={() => dispatch(addToFavourite(detail))}
               >
                 More Details
               </button>
             </Link>
-            <ToastContainer/>
+            <ToastContainer />
           </div>
         </div>
       </div>
